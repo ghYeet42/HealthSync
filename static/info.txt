@@ -1,0 +1,14 @@
+
+Hope you enjoy your new logo, here are the people that
+made your beautiful logo happen :)
+font name: Renner-Book
+font link: http://indestructibletype.com/BuyRenner.html
+font author: indestructible type*
+font author site: http://indestructibletype.com/Home.html
+
+
+icon designer: Icons By Alfredo
+icon designer link: /AlfredoCreates
+        
+{"bg":"#FFE9E6","icon-gradient-0":"#FF5A20","icon-gradient-1":"#FFACC7","font":"#3A1C18","slogan":"#4e302c"}
+      
