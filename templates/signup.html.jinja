@@ -7,13 +7,6 @@
         <title></title>
         <link href="/static/styles.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-        <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-        <link rel="stylesheet" href="css/animate.css">
-        <script src="js/wow.min.js"></script>
-
-              <script>
-              new WOW().init();
-              </script>
 
         <style>
 
@@ -24,17 +17,12 @@
                 background-size: cover;
             }
 
-            .bruh {
-                padding-top: 8%;
+            .profilePicutre {
+                vertical-align: middle;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
             }
-
-            hr {
-                color: white;
-                border-width: 20px;
-                border-radius: 5px;
-            }
-
-
 
         </style>
 
@@ -42,18 +30,19 @@
 
 
 
-
-
     <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+            <div class="container-fluid">
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
                 <div class="collapse navbar-collapse" id="navbarNav">
 
-                    <a class="navbar-brand wow bounceInUp" href="#">
+                    <a class="navbar-brand" href="#">
                         <img src="/static/default.png" alt="" width="30" height="24" class="d-inline-block align-text-top"> HealthSync
                     </a>
 
@@ -71,62 +60,75 @@
                             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                         </li>
                     </ul>
-                </div>
-        </div>
-        </nav>
-
-        <!-- <div class="col"><img src="/static/default.png" class="rounded rounded float-end mh-75" alt="HealthSync brand image" height="500"></div> -->
-
-
-        <span class="border border-1">
-
-            <div class="container float-md bruh">
-
-                <div class="row">
-
-                    <div class="col">
-
-                        <form method="post" action="">
-
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label text-light">Username<!--[or username]--></label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                                <!--<div id="emailHelp" class="form-text text-light">Your email here</div>-->
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label text-light">Password</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1">
-                            </div>
-
-                            <!-- <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-
-                            </div> -->
-
-                            <!--<button type="submit" class="btn btn-primary">Create your account!</button>--><button type="submit" class="btn btn-primary">Sign in!</button>
-                            
-                            <hr>
-                            
-                            <div id="emailHelp" class="form-text text-center text-light">
-                                <p>Promote wellness by connecting users with similar health and fitness goals!</p>
-                                <p>You knew around here?</p>
-                                <button type="submit" class="btn btn-primary"><a href="register">Sign up here!</a></button>
-                            </div>
-
-                        </form>
-                    </div>
-
-                    <div class="col">
-                        <img src="/static/default.png" class="rounded mx-auto d-block" alt="HealthSync brand image" height="500">
-                    </div>
 
                 </div>
 
             </div>
 
-        </span>
+        </nav>
+
+
+        <form method="post" action="">
+
+            <span class="border border-1">
+
+                <div class="container float-md bruh">
+
+                    <div class="row">
+
+                        <div class="col">
+
+                            <form method="post" action="">
+
+                                <div class="mb-3">
+
+                                <div class="form -row"></div>
+
+                                    <div class="col-md-6">
+                                        <label for="ProfilePicture4">Profile Picture</label>
+                                        <input name="pfp" type="image" class="form-control" id="pfp" placeholder="Profile picture here">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="inputEmail4">Email</label>
+                                        <input name="email" type="email" class="form-control" id="email" placeholder="Email">
+                                    </div>
+
+                                </div>
+
+                                    <div class="col-md-6">
+                                        <label for="inputPassword4">Username</label>
+                                        <input type="text" class="form-control" id="username" placeholder="Password">
+                                    </div>
+                                
+
+                                    <div class="form-group">
+                                        <label for="inputAddress">Password</label>
+                                        <input name="password" type="password" class="form-control" id="password" placeholder="sumn">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="inputAddress2">Birthday</label>
+                                        <input name="birthday" type="date" class="form-control" id="birthday" placeholder="sumn">
+                                    </div>
+
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Sign in</button>
+                                
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            
+            </span>
+
+        </form>
         
+        <!--<button type="submit" class="btn btn-primary">Create your account!</button>-->
 
     </body>
 
