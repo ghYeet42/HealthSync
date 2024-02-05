@@ -32,8 +32,6 @@ def signup():
 
     if request.method == "POST":
 
-        newUserProfilePicture = request.form["pfp"]
-
         newUserEmail = request.form["email"]
 
         newUserUsername = request.form["username"]
@@ -45,7 +43,7 @@ def signup():
 
         cursor = con.cursor()
 
-        cursor.execute(f"INSERT INTO `users` (`pfp`, `email`, `username`, `password`, `birthday`) VALUES ('{newUserProfilePicture}', '{newUserEmail}', '{newUserUsername}', '{newUserPassword}', '{newUserBirthday}'")
+        cursor.execute(f"INSERT INTO `users` ( `email`, `username`, `password`, `birthday`) VALUES ('{newUserEmail}', '{newUserUsername}', '{newUserPassword}', '{newUserBirthday}')")
 
         cursor.close()
 
