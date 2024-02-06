@@ -27,6 +27,8 @@ def index():
 
     # return ("<p style=\"color:red;\">Hello!</p>")
 
+######
+
 @app.route("/register", methods=["POST", "GET"])
 def signup():
 
@@ -50,3 +52,31 @@ def signup():
         con.commit()
 
     return render_template ("signup.html.jinja")
+
+
+@app.route("/signin", methods=["POST", "GET"])
+def signin():
+        
+        if request.method == "POST":
+        
+            userName = request.form["username"]
+
+            userPassword = request.form["password"]
+
+            cursor = con.cursor()
+            
+            cursor.execute(f"SELECT * FROM `users` WHERE `username` = '{userName}'")
+
+            checker = cursor.fetchone()
+
+            if checker == userPassword["password"]:
+                return redirect("/feed")
+            else:
+                print("Skill")
+
+        return render_template("signin.html.jinja")
+
+
+        #if cursor.fetchone(f"SELECT `email`, `username`, `password` FROM `users`") ==  :
+        #if cursor.execute(f"SELECT `email`, `username`, `password` FROM `users`") == :
+
