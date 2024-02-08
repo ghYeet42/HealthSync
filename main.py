@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, jsonify
+import flask_login
 import pymysql
 import pymysql.cursors
 from pprint import pprint as print
@@ -20,8 +21,57 @@ con = pymysql.connect (
 
 ######
 
-@app.route("/")
+app.secret_key = "br3@D_y_-19!"
+login_manager = flask_login.LoginManager()
+login_manager.init_app(app)
+
+class User:
+     
+     is_authenticated = True
+     is_anonymous = False
+     is_active = True
+
+     def __init__(self, id, pfp, email, username):
+          
+          self.id = id
+          self.pfp = pfp
+          self.email = email
+          self.username = username
+
+     def get_id(self):
+          
+          return str(self.id)
+
+######
+
+@login_manager.user_loader 
+
+def load_user(user_id):
+     
+    cursor = con.cursor()
+
+    cursor.execute(f"(SELECT * FROM `users` WHERE `id` = {user_id}))")
+
+    check = cursor.fetchone()
+
+    cursor.close()
+
+    con.commit()
+
+    if check is None:
+         
+        return None
+    
+    return User(check["id"], check ["pfp"], check["email"], check["username"])
+     
+######
+
+@app.route("/", methods=["POST", "GET"])
 def index():
+    
+    if flask_login.current_user.is_authenticated:
+         
+        return redirect ("/feed")
 
     return render_template ("home.html.jinja")
 
@@ -51,8 +101,11 @@ def signup():
 
         con.commit()
 
+        return redirect("sigin.html.jinja")
+
     return render_template ("signup.html.jinja")
 
+######
 
 @app.route("/signin", methods=["POST", "GET"])
 def signin():
@@ -69,14 +122,24 @@ def signin():
 
             checker = cursor.fetchone()
 
-            if checker == userPassword["password"]:
-                return redirect("/feed")
-            else:
-                print("Skill")
+            if checker is not None and userPassword == checker["password"]:
+                 
+                 user = load_user(checker["id"])
 
-        return render_template("signin.html.jinja")
+                 flask_login.login_user(user)
+
+                 return redirect("/feed")
+
+        return render_template("signin.html.jinja") 
 
 
         #if cursor.fetchone(f"SELECT `email`, `username`, `password` FROM `users`") ==  :
         #if cursor.execute(f"SELECT `email`, `username`, `password` FROM `users`") == :
+        #return redirect("/feed")
 
+
+@app.route('/feed')
+@flask_login.login_required
+def feed():
+     
+     return flask_login.current_user
