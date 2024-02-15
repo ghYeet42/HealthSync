@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, jsonify
+from flask import Flask, render_template, request, redirect, jsonify, g
 import flask_login
 import pymysql
 import pymysql.cursors
@@ -11,13 +11,27 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 auth = HTTPBasicAuth()
 
-con = pymysql.connect (
-    database = "cscarlett_healthsync",
-    user = "cscarlett",
-    password = "228941274",
-    host = "10.100.33.60",
-    cursorclass = pymysql.cursors.DictCursor
+def connect_db():
+    return pymysql.connect (
+        database = "cscarlett_healthsync",
+        user = "cscarlett",
+        password = "228941274",
+        host = "10.100.33.60",
+        cursorclass = pymysql.cursors.DictCursor,
+        autocommit=True
 )
+
+def get_db():
+    '''Opens a new database connection per request.'''        
+    if not hasattr(g, 'db'):
+        g.db = connect_db()
+    return g.db   
+
+@app.teardown_appcontext
+def close_db(error):
+    '''Closes the database connection at the end of request.'''    
+    if hasattr(g, 'db'):
+        g.db.close()  
 
 ######
 
@@ -48,7 +62,7 @@ class User:
 
 def load_user(user_id):
      
-    cursor = con.cursor()
+    cursor = get_db().cursor()
 
     cursor.execute(f"(SELECT * FROM `users` WHERE `id` = {user_id}))")
 
@@ -56,7 +70,7 @@ def load_user(user_id):
 
     cursor.close()
 
-    con.commit()
+    get_db().commit()
 
     if check is None:
          
@@ -93,13 +107,13 @@ def signup():
         newUserBirthday = request.form["birthday"]
         
 
-        cursor = con.cursor()
+        cursor = get_db().commit()
 
         cursor.execute(f"INSERT INTO `users` ( `email`, `username`, `password`, `birthday`) VALUES ('{newUserEmail}', '{newUserUsername}', '{newUserPassword}', '{newUserBirthday}')")
 
         cursor.close()
 
-        con.commit()
+        get_db().commit()
 
         return redirect("sigin.html.jinja")
 
@@ -116,7 +130,8 @@ def signin():
 
             userPassword = request.form["password"]
 
-            cursor = con.cursor()
+            cursor = get_db().commit()
+
             
             cursor.execute(f"SELECT * FROM `users` WHERE `username` = '{userName}'")
 
@@ -142,4 +157,29 @@ def signin():
 @flask_login.login_required
 def feed():
      
-     return flask_login.current_user
+    if flask_login.current_user.is_authenticated == False:
+
+        return redirect("/")
+
+    cursor = get_db().commit()
+
+            
+    cursor.execute(f"SELECT * FROM `posts` ORDER BY `timestamp`")
+
+    checker = cursor.fetchone()
+
+    cursor.close()
+
+    get_db().commit()
+     
+    return render_template("feed.html.jinja", posting = checker)
+
+@app.route('/post')
+def post():
+
+    desc = request.form["description"]
+    useriD = request.form["user_id"]
+
+    cursor = get_db().commit()
+            
+    cursor.execute(f"INSERT INTO `posts` ( `description`, `user_id`, `timestamp`) VALUES ('{desc}', '{useriD}')")

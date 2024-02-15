@@ -14,8 +14,30 @@
 
     <body>
          
-         
-         <p>wasggggg1</p>
+        <h1>Your Todos List</h1>
+
+        <div class="border">
+
+        <ul>
+                <li class="{% if post['complete'] %} complete {% endif %}">
+
+                    <div>{{post["description"]["user_id"]["whenposted"]}}</div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+
+                        <form method="post" action="/post">
+                            <input type="submit" value="Delete" class="btn btn-danger me-md-2">
+                        </form>
+
+                        
+                            <form method="post" action="/completedTodo/{{todo['id']}}">   
+                                <input type="submit" value="Mark Complete" class="btn btn-success">
+                            </form>
+                    </div>
+
+                    <hr>
+
+                </li>
 
     </body>
 
