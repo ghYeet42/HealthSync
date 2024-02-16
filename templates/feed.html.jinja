@@ -4,40 +4,112 @@
 
     <head>
 
-        <title>
+        <title>Feed Page</title>
+        <link href="/static/styles.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+        <link rel="stylesheet" href="css/animate.css">
+        <script src="js/wow.min.js"></script>
 
-        </title>
+              <script>
+              new WOW().init();
+              </script>
+
 
     </head>
 
 
 
     <body>
-         
-        <h1>Your Todos List</h1>
 
-        <div class="border">
+    <div class="container">
 
-        <ul>
-                <li class="{% if post['complete'] %} complete {% endif %}">
+        <div class="row">
+            <div class="col-4">One of two columns</div>
+            <div class="col-4">One of two columns</div>
+        </div>
 
-                    <div>{{post["description"]["user_id"]["whenposted"]}}</div>
+        <div class="row justify-content-center">
+            <div class="col-4">One of two columns</div>
+            <div class="col-4">One of two columns</div>
+        </div>
 
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <div class="row justify-content-end">
+            <div class="col-4">One of two columns</div>
+            <div class="col-4">One of two columns</div>
+        </div>
 
-                        <form method="post" action="/post">
-                            <input type="submit" value="Delete" class="btn btn-danger me-md-2">
-                        </form>
+        <div class="row justify-content-around">
+            <div class="col-4">One of two columns</div>
+            <div class="col-4">One of two columns</div>
+        </div>
 
-                        
-                            <form method="post" action="/completedTodo/{{todo['id']}}">   
-                                <input type="submit" value="Mark Complete" class="btn btn-success">
-                            </form>
+        <div class="row justify-content-between">
+            <div class="col-4">One of two columns</div>
+            <div class="col-4">One of two columns</div>
+        </div>
+
+    </div>
+
+    <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Launch demo modal
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+            <div class="modal-dialog" role="document">
+
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
 
-                    <hr>
+                    <div class="modal-body">
+                        ...
+                    </div>
 
-                </li>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+         
+        <h1>Make a Post!</h1>
+
+            <div class="border">
+
+                    <li class="">
+
+                        {% for posts in post %}
+
+                            <div>{{post["description"]}}</div>
+    
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                
+                                <form method="post" action="/completedTodo/{{todo['id']}}">   
+                                    <input type="submit" value="Mark Complete" class="btn btn-success">
+                                </form>
+
+                            </div>
+
+                        {% endfor %}
+
+                        <hr>
+
+                    </li>
+
+            </div>
 
     </body>
 

@@ -64,7 +64,7 @@ def load_user(user_id):
      
     cursor = get_db().cursor()
 
-    cursor.execute(f"(SELECT * FROM `users` WHERE `id` = {user_id}))")
+    cursor.execute(f"(SELECT * FROM `users` WHERE `id` = {user_id})")
 
     check = cursor.fetchone()
 
@@ -106,10 +106,9 @@ def signup():
 
         newUserBirthday = request.form["birthday"]
         
+        cursor = get_db().cursor()
 
-        cursor = get_db().commit()
-
-        cursor.execute(f"INSERT INTO `users` ( `email`, `username`, `password`, `birthday`) VALUES ('{newUserEmail}', '{newUserUsername}', '{newUserPassword}', '{newUserBirthday}')")
+        cursor.execute(f"INSERT INTO `users` (`email`, `username`, `password`, `birthday`) VALUES ('{newUserEmail}', '{newUserUsername}', '{newUserPassword}', '{newUserBirthday}')")
 
         cursor.close()
 
@@ -130,9 +129,8 @@ def signin():
 
             userPassword = request.form["password"]
 
-            cursor = get_db().commit()
+            cursor = get_db().cursor()
 
-            
             cursor.execute(f"SELECT * FROM `users` WHERE `username` = '{userName}'")
 
             checker = cursor.fetchone()
@@ -161,10 +159,10 @@ def feed():
 
         return redirect("/")
 
-    cursor = get_db().commit()
+    cursor = get_db().cursor()
 
             
-    cursor.execute(f"SELECT * FROM `posts` ORDER BY `timestamp`")
+    cursor.execute(f"SELECT * FROM `posts` ORDER BY `whenposted`")
 
     checker = cursor.fetchone()
 
@@ -178,8 +176,12 @@ def feed():
 def post():
 
     desc = request.form["description"]
-    useriD = request.form["user_id"]
+    useriD = flask_login.current_user.id
 
-    cursor = get_db().commit()
+    cursor = get_db().cursor()
             
     cursor.execute(f"INSERT INTO `posts` ( `description`, `user_id`, `timestamp`) VALUES ('{desc}', '{useriD}')")
+
+    cursor.close()
+
+    get_db().commit()
